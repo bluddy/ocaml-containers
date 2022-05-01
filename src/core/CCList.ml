@@ -1598,6 +1598,8 @@ let set_at_idx i x l0 =
   set_at_idx 4 10 [1;2;3] = [1;2;3]
   set_at_idx 1 10 [1;2;3] = [1;10;3]
   set_at_idx (-2) 10 [1;2;3] = [1;10;3]
+  set_at_idx (-3) 10 [1;2;3] = [10;2;3]
+  set_at_idx (-4) 10 [1;2;3] = [1;2;3]
 *)
 
 let insert_at_idx i x l =
@@ -1615,6 +1617,7 @@ let insert_at_idx i x l =
   insert_at_idx 4 10 [1;2;3] = [1;2;3;10]
   insert_at_idx 1 10 [1;2;3] = [1;10;2;3]
   insert_at_idx (-2) 10 [1;2;3] = [1;10;2;3]
+  insert_at_idx (-4) [1;2;3] = [4;1;2;3]
 *)
 
 let remove_at_idx i l0 =
@@ -1635,6 +1638,27 @@ let remove_at_idx i l0 =
   remove_at_idx (-2) [1;2;3;4] = [1;2;4]
   remove_at_idx (-3) [1;2;3;4] = [1;3;4]
   remove_at_idx (-4) [1;2;3;4] = [2;3;4]
+  remove_at_idx (-5) [1;2;3;4] = [1;2;3;4]
+*)
+
+let modify_at_idx i f l0 =
+  let rec aux l acc i = match l with
+    | [] -> l0
+    | y::l' when i=0 -> List.rev_append acc (f y::l')
+    | y::l' ->
+      aux l' (y::acc) (i-1)
+  in
+  let i = if i<0 then length l0 + i else i in
+  aux l0 [] i
+
+(*$T
+  modify_at_idx 0 (fun x -> x + 10) [1;2;3;4] = [11;2;3;4]
+  modify_at_idx 3 (fun x -> x + 10) [1;2;3;4] = [1;2;13;4]
+  modify_at_idx 5 (fun x -> x + 10) [1;2;3;4] = [1;2;3;4]
+  modify_at_idx (-1) (fun x -> x + 10) [1;2;3;4] = [1;2;3;14]
+  modify_at_idx (-2) (fun x -> x + 10) [1;2;3;4] = [1;2;13;4]
+  modify_at_idx (-4) (fun x -> x + 10) [1;2;3;4] = [11;2;3;4]
+  modify_at_idx (-5) (fun x -> x + 10) [1;2;3;4] = [1;2;3;4]
 *)
 
 let range_by ~step i j =

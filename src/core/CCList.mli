@@ -615,7 +615,7 @@ val foldi2 : ('c -> int -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
 val get_at_idx : int -> 'a t -> 'a option
 (** [get_at_idx i l] returns [Some i-th] element of the given list [l]
     or [None] if the list [l] is too short.
-    If the index is negative, it will get element starting from the end
+    If the index is negative, it will get element counting backwards from the end
     of the list [l]. *)
 
 val nth_opt : 'a t -> int -> 'a option
@@ -628,25 +628,31 @@ val get_at_idx_exn : int -> 'a t -> 'a
 (** [get_at_idx_exn i l] gets the [i-th] element of [l], or
     @raise Not_found if the index is invalid.
     The first element has index 0.
-    If the index is negative, it will get element starting from the end
+    If the index is negative, it will get element counting backwards from the end
     of the list. *)
 
 val set_at_idx : int -> 'a -> 'a t -> 'a t
 (** [set_at_idx i x l] replaces the [i-th] element with [x] (removes the old one),
     or does nothing if index is too high.
-    If the index is negative, it will set element starting from the end
+    If the index is negative, it will set element counting backwards from the end
     of the list. *)
 
 val insert_at_idx : int -> 'a -> 'a t -> 'a t
 (** [insert_at_idx i x l] inserts [x] at [i-th] position, between the two existing elements.
     If the index is too high, append at the end of the list.
-    If the index is negative, it will insert element starting from the end
+    If the index is negative, it will insert element counting backwards from the end
     of the list. *)
 
 val remove_at_idx : int -> 'a t -> 'a t
 (** [remove_at_idx i l] removes element at given index [i].
     Does nothing if the index is too high.
-    If the index is negative, it will remove element starting from the end
+    If the index is negative, it will remove element counting backwards from the end
+    of the list. *)
+
+val modify_at_idx : int -> ('a -> 'a) -> 'a t -> 'a t
+(** [modify_at_idx i f l] modifies the element at given index [i].
+    Does nothing if the index is too high.
+    If the index is negative, it will modify the element counting backwards from the end
     of the list. *)
 
 (** {2 Set Operators}

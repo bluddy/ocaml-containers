@@ -591,6 +591,12 @@ val get_at_idx : int -> 'a t -> 'a option
     If the index is negative, it will get element starting from the end
     of the list [l]. *)
 
+val modify_at_idx : int -> f:('a -> 'a) -> 'a t -> 'a t
+(** [modify_at_idx i ~f l] modifies the element at given index [i].
+    Does nothing if the index is too high.
+    If the index is negative, it will modify the element counting backwards from the end
+    of the list. *)
+
 val nth_opt : 'a t -> int -> 'a option
 (** [nth_opt l n] returns [Some n-th] element of [l]. Safe version of {!nth}.
     @raise Invalid_argument if the int is negative.
