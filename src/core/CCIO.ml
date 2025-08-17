@@ -238,7 +238,7 @@ let write_lines_l oc l = List.iter (write_line oc) l
 (* test {read,write}_lines. Need to concatenate the lists because some
    strings in the random input might contain '\n' themselves *)
 
-let with_in_out ?(mode = 0o644) ?(flags = [ Open_creat ]) filename f =
+let with_in_out ?(mode = 0o644) ?(flags = [ Open_creat; Open_binary ]) filename f =
   let ic = open_in_gen (Open_rdonly :: flags) mode filename in
   let oc = open_out_gen (Open_wronly :: flags) mode filename in
   try
