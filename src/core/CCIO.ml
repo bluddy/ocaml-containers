@@ -103,7 +103,7 @@ let finally_ f x ~h =
     h x;
     raise e
 
-let with_in ?(mode = 0o644) ?(flags = [ Open_text ]) filename f =
+let with_in ?(mode = 0o644) ?(flags = [ Open_binary ]) filename f =
   let ic = open_in_gen (Open_rdonly :: flags) mode filename in
   finally_ f ic ~h:close_in
 
